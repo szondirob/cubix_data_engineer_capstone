@@ -18,6 +18,8 @@ ignore =
    
    E303,
 
+   E231
+
 exclude =
 
    .venv,
