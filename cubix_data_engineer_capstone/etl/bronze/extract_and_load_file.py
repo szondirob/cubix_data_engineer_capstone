@@ -2,9 +2,9 @@ from cubix_data_engineer_capstone.utils.databricks import read_file_from_volume,
 
 
 def bronze_ingest_volume(
-        source_path: str, 
-        bronze_path: str, 
-        file_name: str, 
+        source_path: str,
+        bronze_path: str,
+        file_name: str,
         partition_by: list[str] = None
 ):
     """
@@ -19,9 +19,9 @@ def bronze_ingest_volume(
     df = read_file_from_volume(f"{source_path}/{file_name}", "csv")
 
     return write_file_to_volume(
-        df=df, 
-        full_path=f"{bronze_path}/{file_name}", 
-        format="csv", 
-        mode="overwrite", 
+        df=df,
+        full_path=f"{bronze_path}/{file_name}",
+        format="csv",
+        mode="overwrite",
         partition_by=partition_by
     )

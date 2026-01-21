@@ -21,10 +21,11 @@ pyarrow ="^19.0.0"
 pre-commit = "^4.0.1"
 pandas = "^2.2.3"
 
-[tool.pytest.ini-options]
-testpaths = ["./tests"]
-filterwarnings = ["ignore:DeprecationWarning"]
+[tool.pytest.ini_options]
+textpaths = ["./tests"]
+filterwarnings = ["ignore:DepreciationWarning"]
 addopts = "--disable-warnings -p no:warnings"
+
 
 [build-system]
 requires = ["poetry-core"]

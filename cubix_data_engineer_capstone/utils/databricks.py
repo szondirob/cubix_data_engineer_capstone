@@ -26,7 +26,7 @@ def write_file_to_volume(
         mode: str = "overwrite",
         partition_by: list[str] = None
 ) -> None:
-    
+
     """Writes a DataFrame to UC Volume as a parquet / csv / delta format.
 
     :param df:           DataFrame to be written.
