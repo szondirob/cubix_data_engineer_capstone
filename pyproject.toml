@@ -1,6 +1,6 @@
 [project]
 name = "cubix-data-engineer-capstone"
-version = "0.3.4"
+version = "0.3.5"
 description = ""
 authors = [
     {name = "Robert Szondi", email ="robert.szondi@allianz.com"}
