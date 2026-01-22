@@ -31,7 +31,7 @@ def get_products(products_raw: DataFrame) -> DataFrame:
     :param products_raw: Raw products data.
     :return:             Cleaned, filtered and transformed products data.
     """
-    
+
     return (
         products_raw
         .select(

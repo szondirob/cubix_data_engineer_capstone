@@ -33,7 +33,7 @@ def get_customers(customers_raw: DataFrame) -> DataFrame:
     :param customers_raw: Raw customers data.
     :return:              Cleaned, filtered and transformed Customers data.
     """
-    
+
     return (
         customers_raw
         .select(

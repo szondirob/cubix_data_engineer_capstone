@@ -19,7 +19,7 @@ def get_product_subcategory(product_subcategory_raw: DataFrame) -> DataFrame:
     :param product_subcategory_raw: Raw Product Subcategory data.
     :return:                        Cleaned, filtered and transformed Product Subcategory data.
     """
-    
+
     return (
         product_subcategory_raw
         .select(
