@@ -20,16 +20,49 @@ PRODUCTS_MAPPING = {
 
 
 def get_products(products_raw: DataFrame) -> DataFrame:
-    """Transform and filter Products data.
+    """Transform raw products data into a cleaned dimension table.
 
-    1. Selecting needed columns, and cast the data types.
-    2. Rename columns according to the mapping.
-    3. Create "ProfitMargin" column.
-    4. Replace "NA" values with None.
-    5. Drop duplicates.
+    The function:
+    1. Selects relevant product columns from the raw feed.
+    2. Casts numeric fields (keys, prices, weight, stock level) to proper types.
+    3. Renames columns according to PRODUCTS_MAPPING.
+    4. Derives a ProfitMargin column as ListPrice - DealerPrice.
+    5. Replaces textual "NA" placeholders with nulls.
+    6. Removes duplicate rows.
 
-    :param products_raw: Raw products data.
-    :return:             Cleaned, filtered and transformed products data.
+    Args:
+        products_raw (DataFrame): Raw products DataFrame containing at least:
+            - pk (product key)
+            - psck (product subcategory key)
+            - name (product name)
+            - stancost (standard cost)
+            - dealerprice (dealer price)
+            - listprice (list price)
+            - color
+            - size
+            - range (size range)
+            - weight
+            - nameofmodel (model name)
+            - ssl (safety stock level)
+            - desc (description)
+
+    Returns:
+        DataFrame: Products dimension DataFrame with:
+            - ProductKey
+            - ProductSubCategoryKey
+            - ProductName
+            - StandardCost
+            - DealerPrice
+            - ListPrice
+            - Color
+            - Size
+            - SizeRange
+            - Weight
+            - ModelName
+            - SafetyStockLevel
+            - Description
+            - ProfitMargin
+        All with appropriate data types, cleaned values, and duplicates removed.
     """
 
     return (

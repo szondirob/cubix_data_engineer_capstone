@@ -1,3 +1,14 @@
+"""Build a wide sales fact DataFrame by joining master tables and deriving metrics.
+
+This module provides helpers to:
+- Join cleaned sales, calendar, customer, product, subcategory, and category
+  master tables into a single wide DataFrame.
+- Enrich the joined data with human‑readable attributes (e.g. marital status,
+  gender).
+- Compute key measures such as SalesAmount, HighValueOrder flags, and Profit
+  for downstream reporting and aggregations.
+"""
+
 import pyspark.sql.functions as sf
 from pyspark.sql import DataFrame
 

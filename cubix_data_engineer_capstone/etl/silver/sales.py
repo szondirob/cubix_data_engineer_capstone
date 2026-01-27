@@ -12,10 +12,32 @@ SALES_MAPPING = {
 
 
 def get_sales(sales_raw: DataFrame) -> DataFrame:
-    """Map and filtered sales data.
+    """Transform raw sales data into a cleaned fact table.
 
-    :param sales_raw: Raw sales data.
-    :return:          Mapped and filtered Sales data.
+    The function:
+    1. Selects the relevant sales columns from the raw feed.
+    2. Casts dates and keys to appropriate data types (date/int).
+    3. Renames columns according to SALES_MAPPING.
+    4. Removes duplicate rows.
+
+    Args:
+        sales_raw (DataFrame): Raw sales DataFrame containing at least:
+            - son (sales order identifier)
+            - orderdate (order date)
+            - pk (product key)
+            - ck (customer key)
+            - dateofshipping (shipping date)
+            - oquantity (ordered quantity)
+
+    Returns:
+        DataFrame: Cleaned sales fact DataFrame with columns:
+            - SalesOrderNumber
+            - OrderDate
+            - ProductKey
+            - CustomerKey
+            - ShipDate
+            - OrderQuantity
+        All with appropriate types and duplicates removed.
     """
 
     return (

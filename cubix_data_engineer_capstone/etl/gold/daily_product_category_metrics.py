@@ -3,13 +3,27 @@ from pyspark.sql import DataFrame
 
 
 def get_daily_product_category_metrics(wide_sales: DataFrame) -> DataFrame:
-    """
-    Calculates product category sales metrics aggregated by EnglishProductCategoryName only.
+    """Aggregate sales metrics by product category.
 
-    Note: Averages are rounded to 2 decimals.
+    The function:
+    1. Groups the input data by ``EnglishProductCategoryName``.
+    2. Computes category-level totals and averages for sales and profit:
+       - ``SalesAmountSum`` as the sum of ``SalesAmount`` per category.
+       - ``SalesAmountAvg`` as the average ``SalesAmount`` per category,
+         rounded to 2 decimal places.
+       - ``ProfitSum`` as the sum of ``Profit`` per category.
+       - ``ProfitAvg`` as the average ``Profit`` per category, rounded to
+         2 decimal places.
 
-    :param wide_sales: Input DataFrame containing wide sales data.
-    :return: DataFrame with metrics grouped by EnglishProductCategoryName.
+    Args:
+        wide_sales (DataFrame): Wide sales DataFrame containing at least
+            ``EnglishProductCategoryName``, ``SalesAmount`` and ``Profit``
+            columns.
+
+    Returns:
+        DataFrame: Aggregated metrics with one row per
+        ``EnglishProductCategoryName`` and columns ``SalesAmountSum``,
+        ``SalesAmountAvg``, ``ProfitSum`` and ``ProfitAvg``.
     """
 
     return (

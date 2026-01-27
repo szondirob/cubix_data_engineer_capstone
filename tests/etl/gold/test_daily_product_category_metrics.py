@@ -9,8 +9,16 @@ from cubix_data_engineer_capstone.etl.gold.daily_product_category_metrics import
 
 
 def test_get_daily_product_category_metrics(spark):
-    """
-    Positive test that the function get_daily_product_category_metrics returns the expected DataFrame.
+    """Validate that get_daily_product_category_metrics aggregates by category correctly.
+
+    This test builds a small wide_sales DataFrame with multiple rows for two
+    product categories and then calls get_daily_product_category_metrics.
+    It verifies that for each EnglishProductCategoryName:
+    - SalesAmountSum and ProfitSum are the correct category totals.
+    - SalesAmountAvg and ProfitAvg are the correct category averages,
+      rounded to two decimal places.
+    The result is compared to an expected DataFrame using
+    spark_testing.assertDataFrameEqual.
     """
     wide_sales_test_data = [
         ("Bikes", Decimal("10.00"), Decimal("20.00")),

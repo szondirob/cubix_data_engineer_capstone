@@ -6,8 +6,21 @@ from cubix_data_engineer_capstone.etl.silver.customers import get_customers
 
 
 def test_get_customers(spark):
-    """
-    Positive test that the function get_customers returns the DataFrame
+    """Validate that get_customers transforms, enriches, and deduplicates customer data.
+
+    This test builds a raw customers DataFrame with:
+    - One row to keep, one duplicate row to drop, and one row with null flags
+      and a higher income bracket.
+    It then calls get_customers and asserts that:
+    - Columns are renamed and cast according to CUSTOMERS_MAPPING.
+    - MaritalStatus and Gender are encoded as integer flags (M/S, M/F → 1/0),
+      with None preserved when input is null.
+    - FullAddress is built from AddressLine1 and AddressLine2.
+    - IncomeCategory is derived from YearlyIncome (e.g. 50000 → "Low",
+      50001 → "Medium").
+    - BirthYear is derived from BirthDate.
+    - Duplicate input rows are removed.
+    The result is compared to an expected DataFrame with spark_testing.assertDataFrameEqual.
     """
 
     test_data = spark.createDataFrame(

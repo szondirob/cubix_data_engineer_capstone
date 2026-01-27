@@ -4,8 +4,18 @@ from cubix_data_engineer_capstone.etl.silver.product_subcategory import get_prod
 
 
 def test_get_product_subcategory(spark):
-    """
-    Positive test that the function get_product_subcategory returns the DataFrame
+    """Validate that get_product_subcategory selects, casts, renames, and deduplicates subcategories.
+
+    This test builds a raw product_subcategory DataFrame with required columns,
+    an extra column, and a duplicate row, then calls get_product_subcategory.
+    It checks that:
+    - Only the mapped columns (psk, pck, epsn, spsn, fpsn) are kept.
+    - psk and pck are cast to integers and renamed to ProductSubCategoryKey
+      and ProductCategoryKey.
+    - Name columns are renamed to their English/Spanish/French subcategory names.
+    - Duplicate source rows are removed.
+    The result is compared to an expected DataFrame using
+    spark_testing.assertDataFrameEqual.
     """
 
     test_data = spark.createDataFrame(

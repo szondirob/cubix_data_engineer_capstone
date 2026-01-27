@@ -5,8 +5,16 @@ import pyspark.testing as spark_testing
 from cubix_data_engineer_capstone.etl.silver.sales import get_sales
 
 def test_get_sales(spark):
-    """
-     Positive  test that the function get_sales returns the expected DataFrame.
+    """Validate that get_sales selects, casts, renames, and deduplicates sales data.
+
+    This test builds a raw sales DataFrame with required columns plus an extra
+    column and a duplicate row, then calls get_sales. It checks that:
+    - Only the mapped columns (son, orderdate, pk, ck, dateofshipping, oquantity) are kept.
+    - orderdate and dateofshipping are cast to dates, and pk, ck, oquantity are cast to integers.
+    - Columns are renamed to SalesOrderNumber, OrderDate, ProductKey, CustomerKey,
+      ShipDate, and OrderQuantity.
+    - Duplicate source rows are removed.
+    The result is compared to an expected DataFrame using spark_testing.assertDataFrameEqual.
     """
 
     test_data = spark.createDataFrame(

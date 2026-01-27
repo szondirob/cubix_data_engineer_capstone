@@ -19,19 +19,38 @@ CUSTOMERS_MAPPING = {
 
 
 def get_customers(customers_raw: DataFrame) -> DataFrame:
-    """Transform and filter customers data.
+    """Transform raw customer data into a cleaned dimension table.
 
-    1. Selecting needed columns.
-    2. Apply the columns name mapping.
-    3. Transform MaritalStatus.
-    4. Transform Gender.
-    5. Create FullAddress column.
-    6. Create IncomeCategory column.
-    7. Create BirthYear column.
-    8. Remove duplicates.
+    The function:
+    1. Selects relevant customer columns and casts them to proper types.
+    2. Renames columns according to CUSTOMERS_MAPPING.
+    3. Encodes marital status as an integer flag (M → 1, S → 0, else null).
+    4. Encodes gender as an integer flag (M → 1, F → 0, else null).
+    5. Builds a FullAddress field from address line columns.
+    6. Derives an IncomeCategory (Low/Medium/High) from YearlyIncome.
+    7. Derives BirthYear from BirthDate.
+    8. Removes duplicate rows.
 
-    :param customers_raw: Raw customers data.
-    :return:              Cleaned, filtered and transformed Customers data.
+    Args:
+        customers_raw (DataFrame): Raw customer DataFrame containing at least:
+            - ck (customer key)
+            - name (customer name)
+            - bdate (birth date)
+            - ms (marital status)
+            - gender
+            - income (yearly income)
+            - childrenhome (number of children at home)
+            - occ (occupation)
+            - hof (house owner flag)
+            - nco (number of cars owned)
+            - addr1 (address line 1)
+            - addr2 (address line 2)
+            - phone
+
+    Returns:
+        DataFrame: Customer dimension DataFrame with renamed, typed, and
+        enriched columns (including MaritalStatus, Gender, FullAddress,
+        IncomeCategory, BirthYear) and duplicates removed.
     """
 
     return (

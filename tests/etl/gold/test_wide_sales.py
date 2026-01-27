@@ -145,7 +145,17 @@ def test_join_master_tables(spark):
 
 @patch("cubix_data_engineer_capstone.etl.gold.wide_sales._join_master_tables")
 def test_get_wide_sales(mock_join_master_tables, spark, some_df):
-    """
+    """Validate that get_wide_sales enriches joined data and computes metrics.
+
+    This test mocks the internal _join_master_tables helper to return a small
+    joined DataFrame, then calls get_wide_sales and checks that:
+    - MaritalStatus and Gender integer flags are mapped to the expected
+      string values ("Married"/"Single", "Male"/"Female").
+    - SalesAmount is calculated as OrderQuantity * ListPrice.
+    - HighValueOrder is correctly flagged based on SalesAmount.
+    - Profit is calculated as SalesAmount - (StandardCost * OrderQuantity).
+    The resulting DataFrame is compared with an expected DataFrame using
+    spark_testing.assertDataFrameEqual.
     """
     mock_joined_master_dfs_data = [
         ("SO01", 2, Decimal("10.00"), Decimal("15.00"), 1, 0)

@@ -5,8 +5,15 @@ from cubix_data_engineer_capstone.etl.silver.product_category import get_product
 
 
 def test_get_product_category(spark):
-    """
-    Positive test that the function get_product_category returns the DataFrame
+    """Validate that get_product_category selects, casts, renames, and deduplicates categories.
+
+    This test builds a raw product_category DataFrame containing required columns,
+    extra columns, and duplicate rows, then calls get_product_category. It checks that:
+    - Only the mapped columns (pck, epcn, spcn, fpcn) are kept.
+    - pck is cast to integer and renamed to ProductCategoryKey.
+    - Name columns are renamed to their English/Spanish/French counterparts.
+    - Duplicate source rows are removed.
+    The result is compared to an expected DataFrame using spark_testing.assertDataFrameEqual.
     """
     test_data = spark.createDataFrame(
         [

@@ -5,8 +5,15 @@ import pyspark.testing as spark_testing
 from cubix_data_engineer_capstone.etl.silver.calendar import get_calendar
 
 def test_get_calendar(spark):
-    """
-    Positive  test that the function get_calendar returns the expected DataFrame.
+    """Validate that get_calendar casts, filters, and deduplicates calendar data correctly.
+
+    This test builds a raw calendar DataFrame with all required columns plus an
+    extra column and duplicate rows, then calls get_calendar. It verifies that:
+    - Only the expected calendar columns are kept.
+    - String-typed numeric fields are cast to the appropriate integer/date types.
+    - Duplicate rows are removed so only one record remains.
+    The result is compared to an expected DataFrame using
+    spark_testing.assertDataFrameEqual.
     """
 
     test_data = spark.createDataFrame(

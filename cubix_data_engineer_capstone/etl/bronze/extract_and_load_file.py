@@ -7,13 +7,26 @@ def bronze_ingest_volume(
         file_name: str,
         partition_by: list[str] = None
 ):
-    """
-    Extract files from the source, and load them to the Bronze volume.
+    """Ingest a raw file from a source location into the Bronze layer.
 
-    :param source_path:     Path to source file.
-    :param bronze_path:     Path to the bronze layer.
-    :param file_name:       Name of the file to ingest.
-    :param partition_by:    Column(s) to partition on. "None" by default.
+    The function:
+    1. Reads the specified source file from a Unity Catalog volume as CSV.
+    2. Loads it into a Spark DataFrame.
+    3. Writes the DataFrame to the Bronze volume path, optionally partitioned.
+
+    Args:
+        source_path (str): Base path of the source volume or directory
+            containing the raw file (e.g. '/Volumes/.../raw').
+        bronze_path (str): Target Bronze volume or directory where the
+            ingested file should be stored (e.g. '/Volumes/.../bronze').
+        file_name (str): Name of the file to ingest, including extension
+            (e.g. 'sales.csv').
+        partition_by (list[str] | None, optional): List of column names to
+            partition the Bronze dataset by. If None, no partitioning is used.
+
+    Returns:
+        None: Data is written to the Bronze path as a side effect via
+        write_file_to_volume.
     """
 
     df = read_file_from_volume(f"{source_path}/{file_name}", "csv")

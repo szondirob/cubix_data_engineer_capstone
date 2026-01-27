@@ -7,8 +7,15 @@ from cubix_data_engineer_capstone.etl.gold.daily_sales_metrics import get_daily_
 
 
 def test_get_daily_sales_metrics(spark):
-    """
-    Positive test that the function get_daily_sales_metrics returns the expected DataFrame.
+    """Validate that get_daily_sales_metrics aggregates daily sales correctly.
+
+    This test builds a small wide_sales DataFrame with multiple rows for two
+    different order dates, then calls get_daily_sales_metrics and verifies that:
+    - SalesAmountSum and ProfitSum are the correct per-day totals.
+    - SalesAmountAvg and ProfitAvg are the correct per-day averages,
+      rounded to two decimal places.
+    The result is compared to an expected DataFrame using
+    spark_testing.assertDataFrameEqual.
     """
 
     wide_sales_test_data = [

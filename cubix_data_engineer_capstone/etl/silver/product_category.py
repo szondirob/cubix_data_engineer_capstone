@@ -10,12 +10,29 @@ PRODUCT_CATEGORY_MAPPING = {
 
 
 def get_product_category(product_category_raw: DataFrame) -> DataFrame:
-    """Transform and filter Product Category data.
+    """Transform raw product category data into a cleaned dimension table.
 
-    Steps:
-    1. Select needed columns and cast data types.
-    2. Rename columns according to the mapping.
-    3. Remove duplicates.
+    The function:
+    1. Selects required category columns from the raw feed.
+    2. Casts the category key to integer.
+    3. Renames columns according to PRODUCT_CATEGORY_MAPPING.
+    4. Removes duplicate rows.
+
+    Args:
+        product_category_raw (DataFrame): Raw product category DataFrame
+            containing at least:
+            - pck (product category key)
+            - epcn (English product category name)
+            - spcn (Spanish product category name)
+            - fpcn (French product category name)
+
+    Returns:
+        DataFrame: Product category dimension DataFrame with:
+            - ProductCategoryKey
+            - EnglishProductCategoryName
+            - SpanishProductCategoryName
+            - FrenchProductCategoryName
+        All with appropriate data types and duplicates removed.
     """
     return (
         product_category_raw

@@ -2,17 +2,35 @@ import pyspark.sql.functions as sf
 from pyspark.sql import DataFrame
 
 def get_calendar(calendar_raw: DataFrame) -> DataFrame:
-    """Clean and transform data type for calendar data.
+    """Transform raw calendar data into a cleaned dimension table.
 
-    1. Select required columns.
-    2. Cast them explicitly
-    3. Drop duplicates
+    The function:
+    1. Selects relevant calendar columns.
+    2. Casts columns to appropriate data types (date/int/string).
+    3. Removes duplicate rows.
 
     Args:
-        calendar_raw (DataFrame): Raw Calendar DataFrame
+        calendar_raw (DataFrame): Raw calendar DataFrame containing at least
+            the following columns:
+            - Date
+            - DayNumberOfWeek
+            - DayName
+            - MonthName
+            - MonthNumberOfYear
+            - DayNumberOfYear
+            - WeekNumberOfYear
+            - CalendarQuarter
+            - CalendarYear
+            - FiscalYear
+            - FiscalSemester
+            - FiscalQuarter
+            - FinMonthNumberOfYear
+            - DayNumberOfMonth
+            - MonthID
 
     Returns:
-        DataFrame: Transformed Calendar DataFrame
+        DataFrame: Calendar dimension DataFrame with selected columns,
+        properly cast types, and duplicate rows removed.
     """
 
     return (
