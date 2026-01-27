@@ -8,8 +8,8 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "pyspark (>=3.5.4)",
-    "numpy (>=1)"
+    "numpy (>=1)",
+    "pyspark (==3.5.7)"
 ]
 
 [project.optional-dependencies]
@@ -22,7 +22,7 @@ pre-commit = "^4.0.1"
 pandas = "^2.2.3"
 
 [tool.pytest.ini_options]
-textpaths = ["./tests"]
+testpaths = ["./tests"]
 filterwarnings = ["ignore:DepreciationWarning"]
 addopts = "--disable-warnings -p no:warnings"
 
